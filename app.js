@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
-const { MongoClient, Collection } = require('mongodb');
+const { MongoClient, Collection ,ObjectId} = require('mongodb');
 const uri = 'mongodb://localhost:27017';
 const Client = new MongoClient(uri);
 
@@ -19,7 +19,7 @@ app.use(express.static('public'));
 const userRoutes = require('./route/userRoutes');
 const { register } = require("module");
 
-app.use('/', userRoutes);
+app.use('/', userRoutes);   
 
 
 
@@ -54,7 +54,7 @@ app.get('/', async (req, res) => {
         const collection = db.collection('user');
 
         const ashi = await collection.find().toArray();
-        console.log("User data:", ashi);
+        // console.log("User data:", ashi);
 
         res.render('user/index', { ashi });
     } finally {
@@ -179,7 +179,7 @@ app.post('/deletepro', async (req, res) => {
 
         
         // Redirect after successful deletion
-        return res.redirect('/user/index');
+        return res.redirect('/'); 
     } catch (e) {
         console.error(`Error: ${e}`);
         return res.status(500).send("An error occurred while deleting the product record.");
